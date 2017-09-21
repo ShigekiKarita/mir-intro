@@ -1,0 +1,13 @@
+{
+	"name": "intro-mir",
+	"authors": [
+		"karita"
+	],
+	"dependencies": {
+		  "mir-random": "~>0.2.5",
+		  "mir-algorithm": "~>0.6.13"
+	},
+	"description": "A minimal D application.",
+	"copyright": "Copyright © 2017, karita",
+	"license": "proprietary"
+}
