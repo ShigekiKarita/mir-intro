@@ -94,7 +94,7 @@ void main(string[] args)
     }
 	auto rng = Random(unpredictableSeed);
 	auto var = UniformVariable!int(-100, 100);
-	writeln("m=n=k,FOR,HF,STD");
+	writeln("m=n=k,FOR,HF,STD,MKL");
 
 
     static if(isComplex!C) {
@@ -155,11 +155,25 @@ void main(string[] args)
 			nsecsStd = min(newns, nsecsStd);
 		}
 
+        /// lubeck.mtimes (MKL)
+        import lubeck;
+		auto nsecsMKL = double.max;
+		foreach(_; 0..count)
+		{
+			StopWatch sw;
+			sw.start;
+            c[] = mtimes(a.universal, b.universal);
+			sw.stop;
+			auto newns = sw.peek.to!Duration.total!"nsecs".to!double;
+			nsecsMKL = min(newns, nsecsMKL);
+		}
+
 		/// Result
-        writefln("%s,%s,%s,%s", m,
+        writefln("%s,%s,%s,%s,%s", m,
                  nsecsFor,
                  nsecsHF,
-                 nsecsStd
+                 nsecsStd,
+                 nsecsMKL
             );
 	}
 }
